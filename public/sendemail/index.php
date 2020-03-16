@@ -18,18 +18,18 @@ if($_SERVER['HTTP_REFERER'] === "http://test.zielarskawiesblanki.pl/"){
         $mail = new PHPMailer(true);
         try{
             // SMTP server configuration
-           // $mail->isSMTP();                                      // Send using SMTP
+            //$mail->isSMTP();                                      // Send using SMTP
             $mail->Host       = 'smtp.gmail.com';                // Set the SMTP server to send through
             $mail->SMTPAuth   = true;                             // Enable SMTP authentication
-            $mail->Username   = 'mailfrompage@gmail.com';           // SMTP username
-            $mail->Password   = 'Bugi2020!';                        // SMTP password
-            $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;         // Enable TLS encryption; `PHPMailer::ENCRYPTION_SMTPS` also accepted
-            $mail->Port       = 587;
+            //$mail->Username   = 'mailfrompage@gmail.com';           // SMTP username
+            //$mail->Password   = 'Bugi2020!';                        // SMTP password
+            $mail->SMTPSecure = 'PHPMailer::ENCRYPTION_SMTPS';         // Enable TLS encryption; `PHPMailer::ENCRYPTION_SMTPS` also accepted
+            $mail->Port       = 465;
 
             // Recipients
             $mail->setFrom('mailfrompage@gmail.com', 'React Contact form');
-            $mail->addAddress($email);     // Add a recipient
-            $mail->addReplyTo('mailfrompage@gmail.com', 'Information');
+            $mail->addAddress('mailfrompage@gmail.com');     // Add a recipient
+            //$mail->addReplyTo('mailfrompage@gmail.com', 'Information');
 
             // Content
             $mail->isHTML(true);      // Set email format to HTML
