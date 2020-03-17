@@ -7,7 +7,7 @@ const Wrapper = styled.div`
   top: 0;
   left: 0;
   margin-left: calc(50vw - 200px);
-  margin-top: calc(50vh - 200px);  
+  margin-top: calc(50vh - 200px);
 `;
 
 const FormStyled = styled.form`
@@ -33,6 +33,7 @@ const Textarea = styled.textarea`
   margin-bottom: 10px;
   padding: 7px 7px;
   text-transform: uppercase;
+  font-family: Arial, Helvetica, sans-serif;
 `;
 
 const Button = styled.button`
@@ -97,34 +98,26 @@ class Form extends Component {
       <Wrapper>
         {emailStatus ? emailStatus : null}
         <FormStyled onSubmit={this.submitForm}>
-          <label>
-            <Input
-              type="text"
-              placeholder="Name"
-              value={name}
-              onChange={this.handleChange("name")}
-            />
-          </label>
-          <label>
-            <Input
-              type="text"
-              placeholder="Email"
-              value={email}
-              onChange={this.handleChange("email")}
-            />
-          </label>
-          <label>
-            <Textarea
-              placeholder="Message"
-              value={message}
-              onChange={this.handleChange("message")}
-            ></Textarea>
-          </label>
-          <label>
-            <Button type="sumit" className="submitBtn" value="Submit">
-              Submit
-            </Button>
-          </label>
+          <Input
+            type="text"
+            placeholder="Name"
+            value={name}
+            onChange={this.handleChange("name")}
+          />
+          <Input
+            type="text"
+            placeholder="Email"
+            value={email}
+            onChange={this.handleChange("email")}
+          />
+          <Textarea
+            placeholder="Message"
+            value={message}
+            onChange={this.handleChange("message")}
+          ></Textarea>
+          <Button type="sumit" className="submitBtn" value="Submit">
+            Submit
+          </Button>
         </FormStyled>
       </Wrapper>
     );

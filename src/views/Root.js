@@ -1,8 +1,14 @@
 import React from "react";
 import Form from "../components/Form";
+import GlobalStyle from "../theme/GlobalStyle";
 
 function Root() {
-  return <Form />;
+  return (
+    <>
+      <GlobalStyle />
+      <Form />
+    </>
+  );
 }
 
 export default Root;
