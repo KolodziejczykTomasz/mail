@@ -12,6 +12,7 @@ const Wrapper = styled.div`
 
 const FormStyled = styled.form`
   padding: 50px 50px;
+  
 `;
 
 const Input = styled.input`
