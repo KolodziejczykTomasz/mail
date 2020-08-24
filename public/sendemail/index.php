@@ -4,7 +4,7 @@ use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
 // get refferer server
-if($_SERVER['HTTP_REFERER'] === "https://mailapp.netlify.app/"){
+if($_SERVER['HTTP_REFERER'] === "http://test.zielarskawiesblanki.pl/"){
     // extract the data from $_POST
     $name = isset($_GET['name']) ? $_GET['name'] : null;
     $message = isset($_GET['message']) ? $_GET['message'] : null;
@@ -27,9 +27,9 @@ if($_SERVER['HTTP_REFERER'] === "https://mailapp.netlify.app/"){
             $mail->Port       = 465;
 
             // Recipients
-            //$mail->setFrom('mailfrompage@gmail.com', 'React Contact form');
-            //$mail->addAddress('mailfrompage@gmail.com');     // Add a recipient
-            //$mail->addReplyTo('mailfrompage@gmail.com', 'Information');
+            $mail->setFrom('mailfrompage@gmail.com', 'React Contact form');
+            $mail->addAddress('mailfrompage@gmail.com');     // Add a recipient
+            $mail->addReplyTo('mailfrompage@gmail.com', 'Information');
 
             // Content
             $mail->isHTML(true);      // Set email format to HTML

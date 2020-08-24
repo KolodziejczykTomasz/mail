@@ -82,7 +82,7 @@ class Form extends Component {
     });
     xhr.open(
       'GET',
-      `https://mailapp.netlify.app/sendemail/index.php?sendto=${email}&name=${name}&phone=${phone}&subject=${subject}&message=${message}`,
+      `http://test.zielarskawiesblanki.pl/sendemail/index.php?sendto=${email}&name=${name}&phone=${phone}&subject=${subject}&message=${message}`,
     );
 
     xhr.send();
