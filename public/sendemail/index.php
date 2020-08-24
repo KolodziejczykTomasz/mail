@@ -27,8 +27,8 @@ if($_SERVER['HTTP_REFERER'] === "https://mailapp.netlify.app/"){
             $mail->Port       = 465;
 
             // Recipients
-            $mail->setFrom('mailfrompage@gmail.com', 'React Contact form');
-            $mail->addAddress('mailfrompage@gmail.com');     // Add a recipient
+            //$mail->setFrom('mailfrompage@gmail.com', 'React Contact form');
+            //$mail->addAddress('mailfrompage@gmail.com');     // Add a recipient
             //$mail->addReplyTo('mailfrompage@gmail.com', 'Information');
 
             // Content

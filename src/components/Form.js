@@ -1,5 +1,5 @@
-import React, { Component } from "react";
-import styled from "styled-components";
+import React, { Component } from 'react';
+import styled from 'styled-components';
 
 const Wrapper = styled.div`
   display: block;
@@ -12,7 +12,6 @@ const Wrapper = styled.div`
 
 const FormStyled = styled.form`
   padding: 50px 50px;
-  
 `;
 
 const Input = styled.input`
@@ -21,7 +20,7 @@ const Input = styled.input`
   width: 300px;
   height: 25px;
   margin-bottom: 10px;
-  padding: 7px 7px; 
+  padding: 7px 7px;
 `;
 
 const Textarea = styled.textarea`
@@ -31,7 +30,7 @@ const Textarea = styled.textarea`
   height: auto;
   min-height: 80px;
   margin-bottom: 10px;
-  padding: 7px 7px;  
+  padding: 7px 7px;
   font-family: Arial, Helvetica, sans-serif;
 `;
 
@@ -58,30 +57,32 @@ class Form extends Component {
     subject: '',
     email: '',
     message: '',
-    emailStatus: ''
+    emailStatus: '',
+    status: ''
   };
 
-  handleChange = input => e => {
+  handleChange = (input) => (e) => {
     this.setState({
-      [input]: e.target.value
+      [input]: e.target.value,
     });
   };
 
-  submitForm = e => {
+  submitForm = (e) => {
     const { name, phone, subject, email, message } = this.state;
     console.log(this.state);
     e.preventDefault();
 
     var xhr = new XMLHttpRequest();
 
-    xhr.addEventListener("load", () => {
+    xhr.addEventListener('load', () => {
       this.setState({
-        emailStatus: xhr.responseText
+        emailStatus: xhr.responseText,
+        status: xhr.status,
       });
     });
     xhr.open(
-      "GET",
-      `https://mailapp.netlify.app/sendemail/index.php?sendto=${email}&name=${name}&phone=${phone}&subject=${subject}&message=${message}`
+      'GET',
+      `https://mailapp.netlify.app/sendemail/index.php?sendto=${email}&name=${name}&phone=${phone}&subject=${subject}&message=${message}`,
     );
 
     xhr.send();
@@ -91,7 +92,7 @@ class Form extends Component {
       phone: '',
       subject: '',
       email: '',
-      message: ''
+      message: '',
     });
     e.preventDefault();
   };
@@ -101,44 +102,44 @@ class Form extends Component {
       <Wrapper>
         {emailStatus ? emailStatus : null}
         <FormStyled onSubmit={this.submitForm}>
-        <label for="name">Imię</label>
+          <label for="name"> Imię </label>
           <Input
-          id='name'
+            id="name"
             type="text"
-            placeholder="Imię"
+            placeholder="* pole obowiązkowe"
             value={name}
-            onChange={this.handleChange("name")}
+            onChange={this.handleChange('name')}
           />
-          <label for="subject">Temat</label>
+          <label for="subject"> Temat </label>{' '}
           <Input
-          id='subject'
+            id="subject"
             type="subject"
-            placeholder="Temat"
+            placeholder="* pole obowiązkowe"
             value={subject}
-            onChange={this.handleChange("subject")}
+            onChange={this.handleChange('subject')}
           />
-          <label for="phone">Telefon</label>
+          <label for="phone"> Telefon </label>
           <Input
-          id='phone'
+            id="phone"
             type="phone"
-            placeholder="Telefon"
+            placeholder="* pole nieobowiązkowe"
             value={phone}
-            onChange={this.handleChange("phone")}
+            onChange={this.handleChange('phone')}
           />
-          <label for="email">E-mail</label>
+          <label for="email"> Email </label>
           <Input
-          id='email'
+            id="email"
             type="text"
-            placeholder="E-mail"
+            placeholder="* pole nieobowiązkowe"
             value={email}
-            onChange={this.handleChange("email")}
+            onChange={this.handleChange('email')}
           />
-          <label for="message">Treść wiadomości</label>
+          <label for="message"> Treść wiadomości </label>
           <Textarea
-          id='message'
-            placeholder="Treść wiadomości"
+            id="message"
+            placeholder="* pole obowiązkowe"
             value={message}
-            onChange={this.handleChange("message")}
+            onChange={this.handleChange('message')}
           ></Textarea>
           <Button type="sumit" className="submitBtn" value="Submit">
             Wyślij
