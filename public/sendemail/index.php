@@ -4,7 +4,7 @@ use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
 // get refferer server
-if($_SERVER['HTTP_REFERER'] === "http://test.zielarskawiesblanki.pl/"){
+if($_SERVER['HTTP_REFERER'] === "http://localhost:3000/"){
     // extract the data from $_POST
     $name = isset($_GET['name']) ? $_GET['name'] : null;
     $message = isset($_GET['message']) ? $_GET['message'] : null;
