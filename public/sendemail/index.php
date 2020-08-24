@@ -4,7 +4,7 @@ use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
 // get refferer server
-if($_SERVER['HTTP_REFERER'] === "http://localhost:3000/"){
+if($_SERVER['HTTP_REFERER'] === "https://mailapp.netlify.app/"){
     // extract the data from $_POST
     $name = isset($_GET['name']) ? $_GET['name'] : null;
     $message = isset($_GET['message']) ? $_GET['message'] : null;
@@ -18,11 +18,11 @@ if($_SERVER['HTTP_REFERER'] === "http://localhost:3000/"){
         $mail = new PHPMailer(true);
         try{
             // SMTP server configuration
-            //$mail->isSMTP();                                      // Send using SMTP
+            $mail->isSMTP();                                      // Send using SMTP
             $mail->Host       = 'smtp.gmail.com';                // Set the SMTP server to send through
             $mail->SMTPAuth   = true;                             // Enable SMTP authentication
-            //$mail->Username   = 'mailfrompage@gmail.com';           // SMTP username
-            //$mail->Password   = 'Bugi2020!';                        // SMTP password
+            $mail->Username   = 'mailfrompage@gmail.com';           // SMTP username
+            $mail->Password   = 'Bugi2020!';                        // SMTP password
             $mail->SMTPSecure = 'PHPMailer::ENCRYPTION_SMTPS';         // Enable TLS encryption; `PHPMailer::ENCRYPTION_SMTPS` also accepted
             $mail->Port       = 465;
 
