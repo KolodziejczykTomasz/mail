@@ -1,51 +1,47 @@
 <?php
-header("Access-Control-Allow-Origin: *");
-use PHPMailer\PHPMailer\PHPMailer;
-use PHPMailer\PHPMailer\Exception;
 
-// get refferer server
-if($_SERVER['HTTP_REFERER'] === "http://test.zielarskawiesblanki.pl/"){
-    // extract the data from $_POST
-    $name = isset($_GET['name']) ? $_GET['name'] : null;
-    $message = isset($_GET['message']) ? $_GET['message'] : null;
-    $email = isset($_GET['sendto']) ? $_GET['sendto'] : null;
-
-    if($name && $message && $email){
-    
-        //Load composer's autoloader
-        require 'vendor/autoload.php';
-
-        $mail = new PHPMailer(true);
-        try{
-            // SMTP server configuration
-            $mail->isSMTP();                                      // Send using SMTP
-            $mail->Host       = 'smtp.gmail.com';                // Set the SMTP server to send through
-            $mail->SMTPAuth   = true;                             // Enable SMTP authentication
-            $mail->Username   = 'mailfrompage@gmail.com';           // SMTP username
-            $mail->Password   = 'Bugi2020!';                        // SMTP password
-            $mail->SMTPSecure = 'PHPMailer::ENCRYPTION_SMTPS';         // Enable TLS encryption; `PHPMailer::ENCRYPTION_SMTPS` also accepted
-            $mail->Port       = 465;
-
-            // Recipients
-            $mail->setFrom('mailfrompage@gmail.com', 'React Contact form');
-            $mail->addAddress('mailfrompage@gmail.com');     // Add a recipient
-            $mail->addReplyTo('mailfrompage@gmail.com', 'Information');
-
-            // Content
-            $mail->isHTML(true);      // Set email format to HTML
-            $mail->Subject = 'React Contact form';
-            $mail->Body    = 'Name: ' . $name . '<br />Email: ' . $email . '<br /><br /><b>Message:</b> '
-            . $message;
-
-            if($mail->send())
-                echo "Message has been sent!";
-        }catch (Exception $e){
-            echo "Message couldn't be sent. Error: ", $mail->ErrorInfo;
-        }
-    }else{
-        echo "All the fileds are required!";
-    }
-}else{
-    echo "You can't use this server!";
-}
-?>
+ 
+//Include required PHPMailer files
+	require 'includes/PHPMailer.php';
+	require 'includes/SMTP.php';
+	require 'includes/Exception.php';
+//Define name spaces
+	use PHPMailer\PHPMailer\PHPMailer;
+	use PHPMailer\PHPMailer\SMTP;
+	use PHPMailer\PHPMailer\Exception;
+//Create instance of PHPMailer
+	$mail = new PHPMailer();
+//Set mailer to use smtp
+	$mail->isSMTP();
+//Define smtp host
+	$mail->Host = "smtp.gmail.com";
+//Enable smtp authentication
+	$mail->SMTPAuth = true;
+//Set smtp encryption type (ssl/tls)
+	$mail->SMTPSecure = "tls";
+//Port to connect smtp
+	$mail->Port = "587";
+//Set gmail username
+	$mail->Username = "mailfrompage@gmail.com";
+//Set gmail password
+	$mail->Password = "Bugi2020!";
+//Email subject
+	$mail->Subject = "Test email using PHPMailer";
+//Set sender email
+	$mail->setFrom('Sender Email who will send email');
+//Enable HTML
+	$mail->isHTML(true);
+//Attachment
+	$mail->addAttachment('img/attachment.png');
+//Email body
+	$mail->Body = "<h1>This is HTML h1 Heading</h1></br><p>This is html paragraph</p>";
+//Add recipient
+	$mail->addAddress('mailfrompage@gmail.com');
+//Finally send email
+	if ( $mail->send() ) {
+		echo "Email Sent..!";
+	}else{
+		echo "Message could not be sent. Mailer Error: "{$mail->ErrorInfo};
+	}
+//Closing smtp connection
+	$mail->smtpClose();

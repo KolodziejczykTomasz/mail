@@ -82,7 +82,7 @@ class Form extends Component {
     });
     xhr.open(
       'GET',
-      `http://test.zielarskawiesblanki.pl/sendemail/index.php?sendto=${email}&name=${name}&phone=${phone}&subject=${subject}&message=${message}`,
+      `localhost:3000/sendemail/index.php?sendto=${email}&name=${name}&phone=${phone}&subject=${subject}&message=${message}`,
     );
 
     xhr.send();
