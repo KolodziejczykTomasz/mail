@@ -1,64 +1,11 @@
 import React, { Component } from 'react';
-import styled from 'styled-components';
-
-const Wrapper = styled.div`
-  display: block;
-  width: 400px;
-  top: 0;
-  left: 0;
-  margin-left: calc(50vw - 200px);
-  margin-top: calc(50vh - 200px);
-`;
-
-const FormStyled = styled.form`
-  padding: 50px 50px;
-`;
-
-const Input = styled.input`
-  display: block;
-  margin: 0 auto;
-  width: 300px;
-  height: 25px;
-  margin-bottom: 10px;
-  padding: 7px 7px;
-`;
-
-const Textarea = styled.textarea`
-  display: block;
-  margin: 0 auto;
-  width: 300px;
-  height: auto;
-  min-height: 80px;
-  margin-bottom: 10px;
-  padding: 7px 7px;
-  font-family: Arial, Helvetica, sans-serif;
-`;
-
-const Button = styled.button`
-  display: block;
-  width: 170px;
-  padding: 10px 10px;
-  margin: 50px auto;
-  text-transform: uppercase;
-  font-weight: 700;
-  letter-spacing: 2px;
-  background-color: white;
-  box-sizing: content-box;
-  cursor: pointer;
-  &:hover {
-    border-bottom: 4px solid black;
-  }
-`;
 
 class Form extends Component {
   state = {
     name: '',
-    phone: '',
-    subject: '',
-    email: '',
+    email: 'mailfrompage@gmail.com',
     message: '',
     emailStatus: '',
-    status: ''
   };
 
   handleChange = (input) => (e) => {
@@ -68,86 +15,62 @@ class Form extends Component {
   };
 
   submitForm = (e) => {
-    const { name, phone, subject, email, message } = this.state;
+    const { name, email, message } = this.state;
     console.log(this.state);
-    e.preventDefault();
-
     var xhr = new XMLHttpRequest();
 
     xhr.addEventListener('load', () => {
-      this.setState({
-        emailStatus: xhr.responseText,
-        status: xhr.status,
-      });
+      console.log(xhr.responseText);
     });
+
     xhr.open(
       'GET',
-      `test.zielarskawiesblanki.pl/sendmail/gmail.php?sendto=${email}&name=${name}&phone=${phone}&subject=${subject}&message=${message}`,
+      'http://test.zielarskawiesblanki.pl/sendemail/index.php?sendto=' +
+        email +
+        '&name=' +
+        name +
+        '&message=' +
+        message,
     );
 
     xhr.send();
-
-    this.setState({
-      name: '',
-      phone: '',
-      subject: '',
-      email: '',
-      message: '',
-    });
     e.preventDefault();
   };
+
   render() {
-    const { name, phone, subject, email, message, emailStatus } = this.state;
+    const { name, email, message } = this.state;
     return (
-      <Wrapper>
-        {emailStatus ? emailStatus : null}
-        <FormStyled onSubmit={this.submitForm}>
-          <label for="name"> Imię </label>
-          <Input
-            id="name"
-            type="text"
-            placeholder="* pole obowiązkowe"
-            value={name}
-            onChange={this.handleChange('name')}
-          />
-          <label for="subject"> Temat </label>{' '}
-          <Input
-            id="subject"
-            type="subject"
-            placeholder="* pole obowiązkowe"
-            value={subject}
-            onChange={this.handleChange('subject')}
-          />
-          <label for="phone"> Telefon </label>
-          <Input
-            id="phone"
-            type="phone"
-            placeholder="* pole nieobowiązkowe"
-            value={phone}
-            onChange={this.handleChange('phone')}
-          />
-          <label for="email"> Email </label>
-          <Input
-            id="email"
-            type="text"
-            placeholder="* pole nieobowiązkowe"
-            value={email}
-            onChange={this.handleChange('email')}
-          />
-          <label for="message"> Treść wiadomości </label>
-          <Textarea
-            id="message"
-            placeholder="* pole obowiązkowe"
-            value={message}
-            onChange={this.handleChange('message')}
-          ></Textarea>
-          <Button type="sumit" className="submitBtn" value="Submit">
-            Wyślij
-          </Button>
-        </FormStyled>
-      </Wrapper>
+      <div>
+        <form onSubmit={this.submitForm}>
+          <label>
+            <input
+              type="text"
+              value={name}
+              placeholder="Name"
+              onChange={this.handleChange('name')}
+            />
+          </label>
+          <label>
+            <input
+              type="text"
+              value={email}
+              placeholder="Email"
+              onChange={this.handleChange('email')}
+            />
+          </label>
+          <label>
+            <textarea
+              value={message}
+              placeholder="Message"
+              onChange={this.handleChange('message')}
+            ></textarea>
+          </label>
+          <label>
+            <input type="submit" value="Submit" />
+          </label>
+        </form>
+      </div>
     );
   }
 }
-
 export default Form;
