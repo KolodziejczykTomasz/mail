@@ -53,8 +53,11 @@ const Button = styled.button`
 class Form extends Component {
   state = {
     name: 'TestName',
-    email: 'kolodziejczyk.tomasz44@gmail.com',
+    sendto: 'kolodziejczyk.tomasz44@gmail.com',
     message: 'TestMessages',
+    email: 'kolodziejczyk.tomasz44@gmail.com',
+    phone: '123456789',
+    subject: 'How to send test mail'
   };
 
   handleChange = (input) => (e) => {
@@ -64,7 +67,7 @@ class Form extends Component {
   };
 
   submitForm = (e) => {
-    const { name, email, message } = this.state;
+    const { name, sendto, message, email, subject, phone } = this.state;
     console.log(this.state);
     var xhr = new XMLHttpRequest();
 
@@ -75,11 +78,16 @@ class Form extends Component {
     xhr.open(
       'GET',
       'http://test.zielarskawiesblanki.pl/sendmail/index.php?sendto=' +
-        email +
+        sendto +
         '&name=' +
         name +
         '&message=' +
-        message,
+        message +
+        '&email=' +
+        email +
+        '&subject=' +
+        subject +
+        '&phone=' + phone,
     );
 
     xhr.send();
@@ -87,7 +95,7 @@ class Form extends Component {
   };
 
   render() {
-    const { name, email, message } = this.state;
+    const { name, message, email, subject, phone } = this.state;
     return (
       <Wrapper>
         <FormStyled onSubmit={this.submitForm}>
@@ -106,7 +114,24 @@ class Form extends Component {
               placeholder="Email"
               onChange={this.handleChange('email')}
             />
+          </label> 
+          <label>
+            <Input
+              type="text"
+              value={phone}
+              placeholder="Phone"
+              onChange={this.handleChange('phone')}
+            />
           </label>
+          <label>
+            <Input
+              type="text"
+              value={subject}
+              placeholder="Subject"
+              onChange={this.handleChange('subject')}
+            />
+          </label>
+         
           <label>
             <Textarea
               value={message}
