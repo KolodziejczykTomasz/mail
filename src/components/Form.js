@@ -1,10 +1,61 @@
 import React, { Component } from 'react';
+import styled from 'styled-components';
+
+const Wrapper = styled.div`
+  display: block;
+  width: 400px;
+  top: 0;
+  left: 0;
+  margin-left: calc(50vw - 200px);
+  margin-top: calc(50vh - 200px);
+`;
+
+const FormStyled = styled.form`
+  padding: 50px 50px;
+`;
+
+const Input = styled.input`
+  display: block;
+  margin: 0 auto;
+  width: 300px;
+  height: 25px;
+  margin-bottom: 10px;
+  padding: 7px 7px;
+`;
+
+const Textarea = styled.textarea`
+  display: block;
+  margin: 0 auto;
+  width: 300px;
+  height: auto;
+  min-height: 80px;
+  margin-bottom: 10px;
+  padding: 7px 7px;
+  font-family: Arial, Helvetica, sans-serif;
+`;
+
+const Button = styled.button`
+  display: block;
+  width: 170px;
+  padding: 10px 10px;
+  margin: 50px auto;
+  text-transform: uppercase;
+  font-weight: 700;
+  letter-spacing: 2px;
+  background-color: white;
+  box-sizing: content-box;
+  cursor: pointer;
+  &:hover {
+    border-bottom: 4px solid black;
+  }
+`;
+
 
 class Form extends Component {
   state = {
-    name: '',
-    email: 'mailfrompage@gmail.com',
-    message: '',
+    name: 'TestName',
+    email: 'kolodziejczyk.tomasz44@gmail.com',
+    message: 'TestMessages',
     emailStatus: '',
   };
 
@@ -25,7 +76,7 @@ class Form extends Component {
 
     xhr.open(
       'GET',
-      'http://test.zielarskawiesblanki.pl/sendemail/index.php?sendto=' +
+      'http://test.zielarskawiesblanki.pl/sendmail/index.php?sendto=' +
         email +
         '&name=' +
         name +
@@ -40,10 +91,10 @@ class Form extends Component {
   render() {
     const { name, email, message } = this.state;
     return (
-      <div>
-        <form onSubmit={this.submitForm}>
+      <Wrapper>
+        <FormStyled onSubmit={this.submitForm}>
           <label>
-            <input
+            <Input
               type="text"
               value={name}
               placeholder="Name"
@@ -51,7 +102,7 @@ class Form extends Component {
             />
           </label>
           <label>
-            <input
+            <Input
               type="text"
               value={email}
               placeholder="Email"
@@ -59,17 +110,17 @@ class Form extends Component {
             />
           </label>
           <label>
-            <textarea
+            <Textarea
               value={message}
               placeholder="Message"
               onChange={this.handleChange('message')}
-            ></textarea>
+            ></Textarea>
           </label>
-          <label>
-            <input type="submit" value="Submit" />
-          </label>
-        </form>
-      </div>
+          <Button type="sumit" className="submitBtn" value="Submit">
+            Wyślij
+          </Button>
+        </FormStyled>
+      </Wrapper>
     );
   }
 }
