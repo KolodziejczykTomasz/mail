@@ -50,13 +50,11 @@ const Button = styled.button`
   }
 `;
 
-
 class Form extends Component {
   state = {
     name: 'TestName',
     email: 'kolodziejczyk.tomasz44@gmail.com',
     message: 'TestMessages',
-    emailStatus: '',
   };
 
   handleChange = (input) => (e) => {
