@@ -19,7 +19,7 @@ if($_SERVER['HTTP_REFERER'] === "http://test.zielarskawiesblanki.pl/"){
 	$subject = isset($_GET['subject']) ? $_GET['subject'] : null; 
 	
 
-    if($name && $message && $sendto && email){    
+    if($name && $message && $sendto && email && phone && subject ){    
 
         $mail = new PHPMailer(true);
         try{

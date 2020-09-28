@@ -52,12 +52,13 @@ const Button = styled.button`
 
 class Form extends Component {
   state = {
-    name: 'TestName',
+    name: '',
     sendto: 'kolodziejczyk.tomasz44@gmail.com',
-    message: 'TestMessages',
-    email: 'kolodziejczyk.tomasz44@gmail.com',
-    phone: '123456789',
-    subject: 'How to send test mail'
+    message: '',
+    email: '',
+    phone: '',
+    subject: '',
+    emailStatus: '',
   };
 
   handleChange = (input) => (e) => {
@@ -68,11 +69,12 @@ class Form extends Component {
 
   submitForm = (e) => {
     const { name, sendto, message, email, subject, phone } = this.state;
-    console.log(this.state);
     var xhr = new XMLHttpRequest();
 
     xhr.addEventListener('load', () => {
-      console.log(xhr.responseText);
+      this.setState({
+        emailStatus: xhr.responseText,
+      });
     });
 
     xhr.open(
@@ -87,23 +89,34 @@ class Form extends Component {
         email +
         '&subject=' +
         subject +
-        '&phone=' + phone,
+        '&phone=' +
+        phone,
     );
 
     xhr.send();
     e.preventDefault();
+
+    this.setState({
+      name: '',
+      email: '',
+      message: '',
+      subject: '',
+      phone: '',
+    });
+    e.preventDefault();
   };
 
   render() {
-    const { name, message, email, subject, phone } = this.state;
+    const { name, message, email, subject, phone, emailStatus } = this.state;
     return (
       <Wrapper>
         <FormStyled onSubmit={this.submitForm}>
+          {emailStatus ? emailStatus : null}
           <label>
             <Input
               type="text"
               value={name}
-              placeholder="Name"
+              placeholder="Name*"
               onChange={this.handleChange('name')}
             />
           </label>
@@ -111,15 +124,15 @@ class Form extends Component {
             <Input
               type="text"
               value={email}
-              placeholder="Email"
+              placeholder="Email*"
               onChange={this.handleChange('email')}
             />
-          </label> 
+          </label>
           <label>
             <Input
               type="text"
               value={phone}
-              placeholder="Phone"
+              placeholder="Phone*"
               onChange={this.handleChange('phone')}
             />
           </label>
@@ -127,15 +140,15 @@ class Form extends Component {
             <Input
               type="text"
               value={subject}
-              placeholder="Subject"
+              placeholder="Subject*"
               onChange={this.handleChange('subject')}
             />
           </label>
-         
+
           <label>
             <Textarea
               value={message}
-              placeholder="Message"
+              placeholder="Message*"
               onChange={this.handleChange('message')}
             ></Textarea>
           </label>
