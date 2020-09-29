@@ -1,5 +1,9 @@
 import React, { Component } from 'react';
+import { Button } from 'react-bootstrap';
+import { Redirect } from 'react-router-dom';
+import SweetAlert from 'react-bootstrap-sweetalert';
 import styled from 'styled-components';
+import 'bootstrap/dist/css/bootstrap.css';
 
 const Wrapper = styled.div`
   display: block;
@@ -34,22 +38,6 @@ const Textarea = styled.textarea`
   font-family: Arial, Helvetica, sans-serif;
 `;
 
-const Button = styled.button`
-  display: block;
-  width: 170px;
-  padding: 10px 10px;
-  margin: 50px auto;
-  text-transform: uppercase;
-  font-weight: 700;
-  letter-spacing: 2px;
-  background-color: white;
-  box-sizing: content-box;
-  cursor: pointer;
-  &:hover {
-    border-bottom: 4px solid black;
-  }
-`;
-
 class Form extends Component {
   state = {
     name: '',
@@ -59,12 +47,20 @@ class Form extends Component {
     phone: '',
     subject: '',
     emailStatus: '',
+    isEmty: true,
+    redirect: false,
   };
 
   handleChange = (input) => (e) => {
+    const { name, message, email, subject, phone } = this.state;
     this.setState({
       [input]: e.target.value,
     });
+    if (name && email && subject && phone && message !== '') {
+      this.setState({
+        isEmty: false,
+      });
+    }
   };
 
   submitForm = (e) => {
@@ -106,12 +102,21 @@ class Form extends Component {
     e.preventDefault();
   };
 
+  handleClickOnModal = () => this.setState({ redirect: true });
+
   render() {
-    const { name, message, email, subject, phone, emailStatus } = this.state;
+    const { name, message, email, subject, phone, emailStatus, isEmty } = this.state;
+     const { redirect } = this.state;
+
+     if (redirect) {
+       return <Redirect to="http://test.zielarskawiesblanki.pl" />;
+     }
     return (
       <Wrapper>
         <FormStyled onSubmit={this.submitForm}>
-          {emailStatus ? emailStatus : null}
+          {emailStatus ? (
+            <SweetAlert title={emailStatus} onClick={this.handleClickOnModal}></SweetAlert>
+          ) : null}
           <label>
             <Input
               type="text"
@@ -144,7 +149,6 @@ class Form extends Component {
               onChange={this.handleChange('subject')}
             />
           </label>
-
           <label>
             <Textarea
               value={message}
@@ -152,9 +156,15 @@ class Form extends Component {
               onChange={this.handleChange('message')}
             ></Textarea>
           </label>
-          <Button type="sumit" className="submitBtn" value="Submit">
-            Wyślij
-          </Button>
+          {!isEmty ? (
+            <Button type="sumit" variant="primary" size="block">
+              Wyślij
+            </Button>
+          ) : (
+            <Button variant="secondary" size="block" disabled>
+              Wyślij
+            </Button>
+          )}
         </FormStyled>
       </Wrapper>
     );
