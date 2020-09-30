@@ -117,45 +117,58 @@ class Form extends Component {
           {emailStatus ? (
             <SweetAlert title={emailStatus} onClick={this.handleClickOnModal}></SweetAlert>
           ) : null}
-          <label>
-            <Input
-              type="text"
-              value={name}
-              placeholder="Name*"
-              onChange={this.handleChange('name')}
-            />
-          </label>
-          <label>
-            <Input
-              type="text"
-              value={email}
-              placeholder="Email*"
-              onChange={this.handleChange('email')}
-            />
-          </label>
-          <label>
-            <Input
-              type="text"
-              value={phone}
-              placeholder="Phone*"
-              onChange={this.handleChange('phone')}
-            />
-          </label>
-          <label>
-            <Input
-              type="text"
-              value={subject}
-              placeholder="Subject*"
-              onChange={this.handleChange('subject')}
-            />
-          </label>
-          <label>
-            <Textarea
-              value={message}
-              placeholder="Message*"
-              onChange={this.handleChange('message')}
-            ></Textarea>
-          </label>
+          <label for="name">Name</label>
+          <Input
+            type="text"
+            value={name}
+            placeholder="Pole obowiązkowe"
+            onChange={this.handleChange('name')}
+            minlength="3"
+            maxlength="20"
+            id="name"
+          />
+
+          <label for="email">Email</label>
+          <Input
+            type="email"
+            value={email}
+            placeholder="Pole obowiązkowe"
+            onChange={this.handleChange('email')}
+            maxLength="64"
+            id="email"
+          />
+
+          <label for="phone">Phone</label>
+          <Input
+            type="text"
+            value={phone}
+            placeholder="Pole obowiązkowe"
+            onChange={this.handleChange('phone')}
+            maxlength="9"
+            id="phone"
+          />
+
+          <label for="subject">Subject</label>
+          <Input
+            type="text"
+            value={subject}
+            placeholder="Pole obowiązkowe"
+            onChange={this.handleChange('subject')}
+            minlength="3"
+            maxlength="20"
+            id="subject"
+          />
+
+          <label for="message">Message</label>
+          <Textarea
+            value={message}
+            placeholder="Pole obowiązkowe"
+            onChange={this.handleChange('message')}
+            minlength="3"
+            maxlength="120"
+            id="message"
+          ></Textarea>
+
           {!isEmty ? (
             <Button type="sumit" variant="primary" size="block">
               Wyślij
