@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Button } from 'react-bootstrap';
 import { Redirect } from 'react-router-dom';
-import SweetAlert from 'react-bootstrap-sweetalert';
 import styled from 'styled-components';
 import 'bootstrap/dist/css/bootstrap.css';
 
@@ -49,6 +48,8 @@ class Form extends Component {
     emailStatus: '',
     isEmty: true,
     redirect: false,
+    errors: [],
+    fields: {},
   };
 
   handleChange = (input) => (e) => {
@@ -65,6 +66,13 @@ class Form extends Component {
 
   submitForm = (e) => {
     const { name, sendto, message, email, subject, phone } = this.state;
+
+    if (this.handleValidation()) {
+      alert('Form submitted');
+    } else {
+      alert('Form has errors.');
+    }
+
     var xhr = new XMLHttpRequest();
 
     xhr.addEventListener('load', () => {
@@ -102,72 +110,114 @@ class Form extends Component {
     e.preventDefault();
   };
 
+  handleValidation = () => {
+    const { name, email } = this.state;
+    let errors = {};
+    let formIsValid = true;
+
+    if (!name) {
+      formIsValid = false;
+      errors.name = 'Cannot be empty';
+    }
+
+    if (typeof name !== 'undefined') {
+      if (!name.match(/^[a-zA-Z]+$/)) {
+        formIsValid = false;
+        errors.name = 'Only letters';
+      }
+    }
+
+    if (!email) {
+      formIsValid = false;
+      errors.email = 'Cannot be empty';
+    }
+
+    if (typeof email !== 'undefined') {
+      let lastAtPos = email.lastIndexOf('@');
+      let lastDotPos = email.lastIndexOf('.');
+
+      if (
+        !(
+          lastAtPos < lastDotPos &&
+          lastAtPos > 0 &&
+          email.indexOf('@@') === -1 &&
+          lastDotPos > 2 &&
+          email.length - lastDotPos > 2
+        )
+      ) {
+        formIsValid = false;
+        errors.email = 'Email is not valid';
+      }
+    }
+
+    this.setState({ errors: errors });
+    return formIsValid;
+  };
+
   handleClickOnModal = () => this.setState({ redirect: true });
 
   render() {
-    const { name, message, email, subject, phone, emailStatus, isEmty } = this.state;
-     const { redirect } = this.state;
+    const { redirect, name, message, email, subject, phone, isEmty } = this.state;
 
-     if (redirect) {
-       return <Redirect to="http://test.zielarskawiesblanki.pl" />;
-     }
+    if (redirect) {
+      return <Redirect to="http://test.zielarskawiesblanki.pl" />;
+    }
     return (
       <Wrapper>
         <FormStyled onSubmit={this.submitForm}>
-          {emailStatus ? (
-            <SweetAlert title={emailStatus} onClick={this.handleClickOnModal}></SweetAlert>
-          ) : null}
           <label for="name">Name</label>
           <Input
             type="text"
             value={name}
             placeholder="Pole obowiązkowe"
-            onChange={this.handleChange('name')}
-            minlength="3"
-            maxlength="20"
-            id="name"
+            onChange={this.handleChange('name')}     
+            required
           />
+          <span className="error">{this.state.errors.name}</span>
+          <label for="email">
+            Email
+            <Input
+              type="email"
+              value={email}
+              placeholder="Pole obowiązkowe"
+              onChange={this.handleChange('email')}  
+              refs="email"
+              required
+            />
+          </label>
+          <span className="error">{this.state.errors.email}</span>
+          <br />
+          <label for="phone">
+            Phone
+            <Input
+              type="text"
+              value={phone}
+              placeholder="Pole obowiązkowe"
+              onChange={this.handleChange('phone')}      
+              required
+            />
+          </label>
 
-          <label for="email">Email</label>
-          <Input
-            type="email"
-            value={email}
-            placeholder="Pole obowiązkowe"
-            onChange={this.handleChange('email')}
-            maxLength="64"
-            id="email"
-          />
+          <label for="subject">
+            Subject
+            <Input
+              type="text"
+              value={subject}
+              placeholder="Pole obowiązkowe"
+              onChange={this.handleChange('subject')}    
+              required
+            />
+          </label>
 
-          <label for="phone">Phone</label>
-          <Input
-            type="text"
-            value={phone}
-            placeholder="Pole obowiązkowe"
-            onChange={this.handleChange('phone')}
-            maxlength="9"
-            id="phone"
-          />
-
-          <label for="subject">Subject</label>
-          <Input
-            type="text"
-            value={subject}
-            placeholder="Pole obowiązkowe"
-            onChange={this.handleChange('subject')}
-            minlength="3"
-            maxlength="20"
-            id="subject"
-          />
-
-          <label for="message">Message</label>
-          <Textarea
-            value={message}
-            placeholder="Pole obowiązkowe"
-            onChange={this.handleChange('message')}
-            minlength="3"
-            maxlength="120"
-            id="message"
-          ></Textarea>
+          <label for="message">
+            Message
+            <Textarea
+              value={message}
+              placeholder="Pole obowiązkowe"
+              onChange={this.handleChange('message')}       
+              required
+            ></Textarea>
+          </label>
 
           {!isEmty ? (
             <Button type="sumit" variant="primary" size="block">
