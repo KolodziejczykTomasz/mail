@@ -1,41 +1,9 @@
 import React, { Component } from 'react';
 import { Button } from 'react-bootstrap';
 import { Redirect } from 'react-router-dom';
-import styled from 'styled-components';
+
 import 'bootstrap/dist/css/bootstrap.css';
-
-const Wrapper = styled.div`
-  display: block;
-  width: 400px;
-  top: 0;
-  left: 0;
-  margin-left: calc(50vw - 200px);
-  margin-top: calc(50vh - 200px);
-`;
-
-const FormStyled = styled.form`
-  padding: 50px 50px;
-`;
-
-const Input = styled.input`
-  display: block;
-  margin: 0 auto;
-  width: 300px;
-  height: 25px;
-  margin-bottom: 10px;
-  padding: 7px 7px;
-`;
-
-const Textarea = styled.textarea`
-  display: block;
-  margin: 0 auto;
-  width: 300px;
-  height: auto;
-  min-height: 80px;
-  margin-bottom: 10px;
-  padding: 7px 7px;
-  font-family: Arial, Helvetica, sans-serif;
-`;
+import './Form.css';
 
 class Form extends Component {
   state = {
@@ -163,73 +131,88 @@ class Form extends Component {
       return <Redirect to="http://test.zielarskawiesblanki.pl" />;
     }
     return (
-      <Wrapper>
-        <FormStyled onSubmit={this.submitForm}>
-          <label for="name">Name</label>
-          <Input
-            type="text"
-            value={name}
-            placeholder="Pole obowiązkowe"
-            onChange={this.handleChange('name')}     
-            required
-          />
-          <span className="error">{this.state.errors.name}</span>
-          <label for="email">
-            Email
-            <Input
+      <div id="wrapper">
+        <div id="formStyled">
+          <form onSubmit={this.submitForm}>
+            <label id="labelForm" for="name">
+              Name
+            </label>
+            <input
+              id="input"
+              type="text"
+              value={name}
+              placeholder="Pole obowiązkowe"
+              onChange={this.handleChange('name')}
+              refs="name"
+              required
+            />
+
+            <span className="error">{this.state.errors.name}</span>
+            <label id="labelForm" for="email">
+              Email
+            </label>
+            <input
+              id="input"
               type="email"
               value={email}
               placeholder="Pole obowiązkowe"
-              onChange={this.handleChange('email')}  
+              onChange={this.handleChange('email')}
               refs="email"
               required
             />
-          </label>
-          <span className="error">{this.state.errors.email}</span>
-          <br />
-          <label for="phone">
-            Phone
-            <Input
+
+            <span className="error">{this.state.errors.email}</span>
+            <br />
+            <label id="labelForm" for="phone">
+              Phone
+            </label>
+            <input
+              id="input"
               type="text"
               value={phone}
               placeholder="Pole obowiązkowe"
-              onChange={this.handleChange('phone')}      
+              onChange={this.handleChange('phone')}
+              refs="phone"
               required
             />
-          </label>
 
-          <label for="subject">
-            Subject
-            <Input
+            <label id="labelForm" for="subject">
+              Subject
+            </label>
+            <input
+              id="input"
               type="text"
               value={subject}
               placeholder="Pole obowiązkowe"
-              onChange={this.handleChange('subject')}    
+              onChange={this.handleChange('subject')}
+              refs="subject"
               required
             />
-          </label>
 
-          <label for="message">
-            Message
-            <Textarea
+            <label id="labelForm" for="message">
+              Message
+            </label>
+            <textarea
+              id="textarea"
               value={message}
               placeholder="Pole obowiązkowe"
-              onChange={this.handleChange('message')}       
+              onChange={this.handleChange('message')}
+              refs="message"
               required
-            ></Textarea>
-          </label>
+            ></textarea>
 
-          {!isEmty ? (
-            <Button type="sumit" variant="primary" size="block">
-              Wyślij
-            </Button>
-          ) : (
-            <Button variant="secondary" size="block" disabled>
-              Wyślij
-            </Button>
-          )}
-        </FormStyled>
-      </Wrapper>
+            {!isEmty ? (
+              <Button type="sumit" variant="primary" size="block" id="button">
+                Send
+              </Button>
+            ) : (
+              <Button variant="secondary" size="block" disabled id="button">
+                Send
+              </Button>
+            )}
+          </form>
+        </div>
+      </div>
     );
   }
 }

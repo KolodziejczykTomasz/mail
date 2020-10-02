@@ -1,0 +1,41 @@
+#wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 150px 50px;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+#formStyled {
+  width: 400px;
+  height: 600px;
+  padding: 50px 50px;
+  box-shadow: 1px 1px 6px 4px rgba(227, 227, 227, 1);
+}
+
+#input {
+  width: 300px;
+  height: 25px;
+  margin-bottom: 10px;
+  padding: 7px 7px;
+}
+
+#textarea {
+  width: 300px;
+  height: auto;
+  min-height: 80px;
+  margin-bottom: 10px;
+  padding: 7px 7px;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+#button {
+    margin-top: 50px;
+  height: 40px;
+  font-size: 14px;
+}
+
+#labelForm {
+  font-size: 13px;
+  font-weight: 600;
+}
