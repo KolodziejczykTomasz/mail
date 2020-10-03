@@ -10,7 +10,7 @@ require 'includes/Exception.php';
 
 
 
-if($_SERVER['HTTP_REFERER'] === "http://test.zielarskawiesblanki.pl/"){   
+if($_SERVER['HTTP_REFERER'] === "https://mailapp.netlify.app/"){   
     $name = isset($_GET['name']) ? $_GET['name'] : null;
     $message = isset($_GET['message']) ? $_GET['message'] : null;
     $sendto = isset($_GET['sendto']) ? $_GET['sendto'] : null; 

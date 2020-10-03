@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import { Button } from 'react-bootstrap';
-import { Redirect } from 'react-router-dom';
-
 import 'bootstrap/dist/css/bootstrap.css';
 import './Form.css';
 
@@ -51,7 +49,7 @@ class Form extends Component {
 
     xhr.open(
       'GET',
-      'http://test.zielarskawiesblanki.pl/sendmail/index.php?sendto=' +
+      'https://mailapp.netlify.app/sendmail/index.php?sendto=' +
         sendto +
         '&name=' +
         name +
@@ -75,11 +73,11 @@ class Form extends Component {
       subject: '',
       phone: '',
     });
-    e.preventDefault();
+   
   };
 
   handleValidation = () => {
-    const { name, email } = this.state;
+    const { name, email, phone, subject, message } = this.state;
     let errors = {};
     let formIsValid = true;
 
@@ -95,9 +93,31 @@ class Form extends Component {
       }
     }
 
+    if (!phone) {
+      formIsValid = false;
+      errors.phone = 'Cannot be empty';
+    }
+
+    if (typeof phone !== 'undefined') {
+      if (phone.match(/^[a-zA-Z]+$/)) {
+        formIsValid = false;
+        errors.phone = 'Only numbers';
+      }
+    }
+
     if (!email) {
       formIsValid = false;
       errors.email = 'Cannot be empty';
+    }
+
+    if (!subject) {
+      formIsValid = false;
+      errors.subject = 'Cannot be empty';
+    }
+
+    if (!message) {
+      formIsValid = false;
+      errors.message = 'Cannot be empty';
     }
 
     if (typeof email !== 'undefined') {
@@ -122,18 +142,14 @@ class Form extends Component {
     return formIsValid;
   };
 
-  handleClickOnModal = () => this.setState({ redirect: true });
-
+ 
   render() {
-    const { redirect, name, message, email, subject, phone, isEmty } = this.state;
+    const { name, message, email, subject, phone, isEmty } = this.state;
 
-    if (redirect) {
-      return <Redirect to="http://test.zielarskawiesblanki.pl" />;
-    }
     return (
       <div id="wrapper">
         <div id="formStyled">
-          <form onSubmit={this.submitForm}>
+          <form onSubmit={this.submitForm} id="form">
             <label id="labelForm" for="name">
               Name
             </label>
@@ -141,12 +157,11 @@ class Form extends Component {
               id="input"
               type="text"
               value={name}
-              placeholder="Pole obowiązkowe"
+              placeholder="Field required"
               onChange={this.handleChange('name')}
               refs="name"
               required
             />
-
             <span className="error">{this.state.errors.name}</span>
             <label id="labelForm" for="email">
               Email
@@ -155,14 +170,12 @@ class Form extends Component {
               id="input"
               type="email"
               value={email}
-              placeholder="Pole obowiązkowe"
+              placeholder="Field required"
               onChange={this.handleChange('email')}
               refs="email"
               required
             />
-
             <span className="error">{this.state.errors.email}</span>
-            <br />
             <label id="labelForm" for="phone">
               Phone
             </label>
@@ -170,12 +183,12 @@ class Form extends Component {
               id="input"
               type="text"
               value={phone}
-              placeholder="Pole obowiązkowe"
+              placeholder="Field required"
               onChange={this.handleChange('phone')}
               refs="phone"
               required
             />
-
+            <span className="error">{this.state.errors.phone}</span>
             <label id="labelForm" for="subject">
               Subject
             </label>
@@ -183,24 +196,24 @@ class Form extends Component {
               id="input"
               type="text"
               value={subject}
-              placeholder="Pole obowiązkowe"
+              placeholder="Field required"
               onChange={this.handleChange('subject')}
               refs="subject"
               required
             />
-
+            <span className="error">{this.state.errors.subject}</span>
             <label id="labelForm" for="message">
               Message
             </label>
             <textarea
               id="textarea"
               value={message}
-              placeholder="Pole obowiązkowe"
+              placeholder="Field required"
               onChange={this.handleChange('message')}
               refs="message"
               required
             ></textarea>
-
+            <span className="error">{this.state.errors.message}</span>
             {!isEmty ? (
               <Button type="sumit" variant="primary" size="block" id="button">
                 Send
